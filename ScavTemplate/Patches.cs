@@ -7,10 +7,10 @@ namespace ModNamespace
 {
     internal class Patches
     {
-        [HarmonyPatch(typeof(Body))]
-        internal static class BodyPatch
+        [HarmonyPatch(typeof(ConsoleScript))]
+        internal static class ConsolePatch
         {
-            [HarmonyPatch(nameof(Body.Start))]
+            [HarmonyPatch(nameof(ConsoleScript.Start))]
             [HarmonyPostfix]
             private static void StartPatch()
             {
