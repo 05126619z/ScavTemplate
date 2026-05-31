@@ -13,8 +13,8 @@ namespace ModNamespace
     [BepInPlugin(ModGUID, ModName, ModVersion)]
     public class Plugin : BaseUnityPlugin
     {
-        public const string ModGUID = "05126619z.template";
-        public const string ModName = "Template";
+        public const string ModGUID = "modauthor.modname";
+        public const string ModName = "ModName";
         public const string ModVersion = "0.0.0";
 
         internal static new ManualLogSource Logger;
@@ -27,7 +27,7 @@ namespace ModNamespace
             Instance = this;
 
             _harmony.PatchAll();
-            Logger.LogInfo($"Plugin ModName is loaded!");
+            Logger.LogInfo($"Plugin {ModName} is loaded!");
         }
     }
 }

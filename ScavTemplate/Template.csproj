@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
-    <AssemblyName>Template</AssemblyName>
+    <AssemblyName>$(ProjectName)</AssemblyName>
     <Product>Template description</Product>
     <Version>1.0.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -11,7 +11,6 @@
 			https://nuget.bepinex.dev/v3/index.json;
 			https://nuget.samboy.dev/v3/index.json
 		</RestoreAdditionalProjectSources>
-    <RootNamespace>ModNamespace</RootNamespace>
     <Platforms>AnyCPU;x64;x86</Platforms>
   </PropertyGroup>
 
@@ -53,21 +52,20 @@
 
   <PropertyGroup>
     <RequiredFilesToCopy>
-			$(AssemblyName).dll;
-      $(AssemblyName).pdb;
+			$(ProjectName).dll;
 		</RequiredFilesToCopy>
     <RequiredFoldersToCopy>
     </RequiredFoldersToCopy>
   </PropertyGroup>
 
   <Target Name="CopyOutputDllsToPluginsFolder" AfterTargets="AfterBuild" Condition="'$(RequiredFilesToCopy)'!=''">
-    <MakeDir Directories="$(BepInExDir)/plugins/$(PluginDirName)" />
+    <MakeDir Directories="$(BepInExDir)/plugins/$(ProjectName)" />
     <CombinePath BasePath="$(OutDir)" Paths="$(RequiredFilesToCopy)">
       <Output TaskParameter="CombinedPaths" ItemName="RequiredFilesToCopy_Combined" />
     </CombinePath>
     <Copy
       SourceFiles="@(RequiredFilesToCopy_Combined)"
-      DestinationFolder="$(BepInExDir)/plugins/$(PluginDirName)"
+      DestinationFolder="$(BepInExDir)/plugins/$(ProjectName)"
     />
   </Target>
 
@@ -78,7 +76,7 @@
     </ItemGroup>
     <Copy
       SourceFiles="@(FilesToCopy)"
-      DestinationFiles="@(FilesToCopy->'$(BepInExDir)/plugins/$(PluginDirName)/%(Identity)')"
+      DestinationFiles="@(FilesToCopy->'$(BepInExDir)/plugins/$(ProjectName)/%(Identity)')"
     />
   </Target>
 </Project>
