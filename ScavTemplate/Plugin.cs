@@ -21,13 +21,19 @@ namespace ModNamespace
         private readonly Harmony _harmony = new(ModGUID);
         public static Plugin Instance { get; private set; } = null!;
 
-        public void Awake()
+        void Awake()
         {
             Logger = base.Logger;
             Instance = this;
 
             _harmony.PatchAll();
             Logger.LogInfo($"Plugin {ModName} is loaded!");
+        }
+
+        void OnDestroy()
+        {
+            _harmony?.UnpatchSelf();
+            Instance = null!;
         }
     }
 }
