@@ -49,6 +49,7 @@
       PrivateAssets="all"
     />
   </ItemGroup>
+
   <PropertyGroup>
   <RequiredFilesToCopy>
   $(ProjectName).dll;
@@ -60,34 +61,25 @@
   </RequiredFoldersToCopy>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <!-- dll: Debug → scripts/, Release → plugins/ -->
-    <PluginDeployDir Condition="'$(Configuration)' == 'Release'">$(BepInExDir)/plugins/$(ProjectName)</PluginDeployDir>
-    <PluginDeployDir Condition="'$(Configuration)' == 'Debug'">$(BepInExDir)/scripts/$(ProjectName)</PluginDeployDir>
-    <!-- папки: всегда в plugins/ -->
-    <PluginAssetsDir>$(BepInExDir)/plugins/$(ProjectName)</PluginAssetsDir>
-  </PropertyGroup>
-
-<Target Name="CopyOutputDllsToPluginsFolder" AfterTargets="AfterBuild" Condition="'$(RequiredFilesToCopy)' != ''">
-  <MakeDir Directories="$(PluginDeployDir)" />
+  <Target Name="CopyOutputDllsToPluginsFolder" AfterTargets="AfterBuild" Condition="'$(RequiredFilesToCopy)'!=''">
+    <MakeDir Directories="$(BepInExDir)/plugins/$(ProjectName)" />
   <CombinePath BasePath="$(OutDir)" Paths="$(RequiredFilesToCopy)">
     <Output TaskParameter="CombinedPaths" ItemName="RequiredFilesToCopy_Combined" />
   </CombinePath>
   <Copy
     SourceFiles="@(RequiredFilesToCopy_Combined)"
-    DestinationFolder="$(PluginDeployDir)"
+      DestinationFolder="$(BepInExDir)/plugins/$(ProjectName)"
   />
 </Target>
 
-<Target Name="CopyFoldersToPluginsFolder" AfterTargets="AfterBuild" Condition="'$(RequiredFoldersToCopy)' != ''">
-  <MakeDir Directories="$(PluginAssetsDir)" />
+  <Target Name="CopyFoldersToPluginsFolder" AfterTargets="AfterBuild" Condition="'$(RequiredFoldersToCopy)'!=''">
   <ItemGroup>
     <RequiredFolders Include="$(RequiredFoldersToCopy.Split(';'))" />
     <FilesToCopy Include="%(RequiredFolders.Identity)/**/*" />
   </ItemGroup>
   <Copy
     SourceFiles="@(FilesToCopy)"
-    DestinationFiles="@(FilesToCopy->'$(PluginAssetsDir)/%(Identity)')"
+      DestinationFiles="@(FilesToCopy->'$(BepInExDir)/plugins/$(ProjectName)/%(Identity)')"
   />
 </Target>
 </Project>

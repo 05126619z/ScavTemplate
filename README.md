@@ -21,9 +21,3 @@ A small BepInEx plugin template for Unity modding Casualties Unknown (or any oth
 3. Update namespace in `Plugin.cs` and `Patches.cs`
 3. Add your mod logic and Harmony patches.
 4. Run the game with BepInEx installed.
-
-## Notes
-
-- The build process copies `$(ProjectName).dll` to `$(BepInExDir)/plugins/$(ProjectName)`.
-
-- Note: To use hot reload feature, download the ScriptEngine mod and set `HideManagerGameObject` in the config to `true`.
